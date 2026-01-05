@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title>模擬国連chatBOT試作品</title>
+        <meta name="description" content="????">
+        <!--リセットCSS-->
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <!--viewport-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!--オリジナルcss-->
+        <link rel="preload" href="style.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <!--jquery-->
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <!--googlefonts-->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+        <!--no-index処理-->
+        <meta name="robots" content="noindex, nofollow">
+    </head>
+    <body>
+        <header id="header" class="l-header">
+            <div class="header_input">
+                <input type="text" class="header_inputText" placeholder="例: Motion...">
+                <button class="header_inputButton" disabled>検索</button>
+            </div>
+        </header>
+        <main id="main" class="l-main">
+            <div class="l-empty"></div>
+            <section class="l-chat">
+                <div class="chat_content">    
+                </div>
+            </section>
+            <!--js-->   
+            <script src="script.js" defer></script>
+        </main>
+        <footer id="footer" class="l-footer">
+            <div class="footer_copyRight">
+                <small>&copy;2026 motizuki-okada</small>
+            </div>
+        </footer>
+    </body>
+</html>
