@@ -1,5 +1,5 @@
 $(window).on('load', function(){
-    //"l-empty"の高さ調整----------------------------------------------------------------------------
+    //".l-empty"の高さ調整----------------------------------------------------------------------------
     const headerHeight = $('.l-header').height();
     $('.l-empty').css({
         'height': headerHeight + 10 + 'px'
@@ -7,7 +7,7 @@ $(window).on('load', function(){
 
     //chat機能----------------------------------------------------------------------------
     /*DB読み込み*/
-    $.getJSON('db/db.json',function(data) {
+    $.ajax({url: 'https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLgkPqT29f2YZ8K_2_b9lcXLMUcJARe5ukfreH8g7Fr5-DtIFPAwVHELKpkWf-c2lvZlNdpEdAG0vtOUC-4k1fdNT2GyGdi9G2Ykqfdr0HiLeK3Bl9BFRdRWhCHOdB-C8HSToCvvUvyIvWXm8EgUJDgPXg7W0NLsVDw4idw98yjEJ15lh4YOntQufKxG0N_bffT8CmsfpwGH3Xn9wR3dD8GH2rRPwFFVZlxdyoYDi-_oJ47t7iiIcmVBSnFFpi85ll1bEsOoYQKsGvkjfrIM9Ag0b_GDLQ&lib=M866x1Xf3qLY2wgT_oT6Sj396qXhm7Y4P', dataType: 'json'}).done(function(data){
         let munTerms = {};
         munTerms = data;
         console.log("データベース読み込み完了");
@@ -52,32 +52,88 @@ $(window).on('load', function(){
                         class: `chat_unit chat_unit__${messageCount}`, 
                     }).appendTo('.chat_content');
 
-                    /*".chat_dialogue__user"の生成*/
-                    $('<p>', {
-                        class: `chat_dialogue chat_dialogue__user chat_dialogue__user__${messageCount}`, 
-                    }).appendTo(`.chat_unit__${messageCount}`);
+                        /*".chat_dialogue__user"の生成*/
+                        $('<div>', {
+                            class: `chat_dialogue chat_dialogue__user chat_dialogue__user__${messageCount}`, 
+                        }).appendTo(`.chat_unit__${messageCount}`);
 
-                    /*".chat_dialogue__answer"の生成*/
-                    $('<p>', {
-                        class: `chat_dialogue chat_dialogue___answer chat_dialogue___answer__${messageCount}`, 
-                    }).appendTo(`.chat_unit__${messageCount}`);
+                            /*".chat_dialogueText__user"の生成*/
+                            $('<p>', {
+                                class: `chat_dialogueText chat_dialogueText__user chat_dialogueText__user__${messageCount}`, 
+                            }).appendTo(`.chat_dialogue__user__${messageCount}`);
 
-                    /*入力情報処理と回答生成*/ 
+
+                        /*".chat_dialogue__answer"の生成*/
+                        $('<div>', {
+                            class: `chat_dialogue chat_dialogue__answer chat_dialogue__answer__${messageCount}`, 
+                        }).appendTo(`.chat_unit__${messageCount}`);
+
+                            /*".chat_dialogueText__answer"の生成*/
+                            $('<p>', {
+                                class: `chat_dialogueText chat_dialogueText__answer chat_dialogueText__answer__${messageCount}`, 
+                            }).appendTo(`.chat_dialogue__answer__${messageCount}`);
+
+
+                    /*入力情報表示と回答生成*/ 
+                    $(`.chat_dialogueText__user__${messageCount}`).html(userInput);
+
+                    /*入力情報処理*/
                     const userInput__processed = userInput.toLowerCase().replace(/\s+/g, "").trim();
-                    $(`.chat_dialogue__user__${messageCount}`).html(userInput);
+                    const answer = data[userInput__processed];
 
                     setTimeout(()=>{
-                        const answer = data[userInput__processed];
                         if(answer){
+                            /*".chat_answerInfo"の生成*/
+                            $('<div>', {
+                                class: `chat_answerInfo chat_answerInfo__${messageCount}`, 
+                            }).appendTo(`.chat_dialogue__answer__${messageCount}`);
+
+                               /*".chat_answerCategory"の生成*/
+                               $('<div>', {
+                                    class: `chat_answerCategory chat_answerCategory__${messageCount}`, 
+                                }).appendTo(`.chat_answerInfo__${messageCount}`);
+
+                                    /*".chat_answerCateTextの生成"*/
+                                    $('<p>', {
+                                        class: `chat_answerCateText chat_answerCateText__${messageCount}`, 
+                                    }).appendTo(`.chat_answerCategory__${messageCount}`);
+
+                                /*".chat_answerLv"の生成*/
+                                $('<div>', {
+                                    class: `chat_answerLv chat_answerLv__${messageCount}`, 
+                                }).appendTo(`.chat_answerInfo__${messageCount}`);
+
+                            /*jsonファイルの情報を取得*/
                             const answer_desc = answer.description;
-                            $(`.chat_dialogue___answer__${messageCount}`).html(answer_desc);
+                            const answer_cate = answer.category;
+                            const answer_lv = answer.level;
+
+                            $(`.chat_dialogueText__answer__${messageCount}`).html(answer_desc);
+                            $(`.chat_answerCateText__${messageCount}`).html(answer_cate);
+
+                            /*".chat_answerLvImg"の生成*/
+                            for (let i = 0; i < answer_lv; i++) {
+                                $('<img>', {
+                                    class: `chat_answerLvImg chat_answerLvImg__${messageCount}`,
+                                    src: `img/star-shape.png`,
+                                    alt: `星型の画像`, 
+                                }).appendTo(`.chat_answerLv__${messageCount}`);
+                            }
+                            
                         }else{
-                            $(`.chat_dialogue___answer__${messageCount}`).html('わからん。');
+                            $(`.chat_dialogueText__answer__${messageCount}`).html('わからん。');
                         }
-                    },500);
+
+                        /*".chat_dialogue__answer"の表示*/
+                        $(`.chat_dialogue__answer__${messageCount}`).addClass(`chat_dialogue__answer__${messageCount}__is-open`);
+                        $(`.chat_dialogue__answer__${messageCount}__is-open`).css({
+                            'opacity': '1',
+                            'transform': 'translateY(0)', 
+                            'transition': 'opacity 1s, transform 1s'
+                        })
+                    },200);
                 }
             }
         )
-
     })
 })
