@@ -16,11 +16,6 @@ $breakpoints: (
 }
 
 /*Base---------------------------*/
-a{
-    display: block;
-    color: white;
-    text-decoration: none;
-}
 body{ 
     width: 100dvw;
     color: white; 
@@ -33,12 +28,24 @@ body{
     font-optical-sizing: auto;
     font-style: normal;
 }
+a{
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+p{
+    font-size: 1rem;
+}
+h1{
+    font-size: 2rem;
+}
 li{
     list-style: none;
     color: white;
 }
 img{
     display: block;
+    object-fit: cover;
 }
 h1, h2, h3, h4, h5, h6{
     font-weight: 700;
@@ -50,6 +57,7 @@ h1, h2, h3, h4, h5, h6{
     position: fixed;
     top: 10px;
     bottom: auto;
+    z-index: 10;
 }
 #main{
     width: 100%;
@@ -62,6 +70,10 @@ h1, h2, h3, h4, h5, h6{
 }
 
 .l-empty{
+    width: 100%;
+}
+.l-manual{
+    display: none;
     width: 100%;
 }
 .l-chat{
@@ -94,6 +106,7 @@ h1, h2, h3, h4, h5, h6{
 }
 .header_inputButton{
     display: block;
+    color: black;
     background-color: #43a3f7;
     border-radius: 5px;
     width: 25%;
@@ -117,8 +130,6 @@ h1, h2, h3, h4, h5, h6{
 }
 .chat_dialogue{
     width: 55%;
-    padding: 20px;
-    font-size: 1.25rem;
     border-radius: 20px;
 
     @include media-sp{
@@ -126,18 +137,67 @@ h1, h2, h3, h4, h5, h6{
     }
 }
 .chat_dialogue__user{
-    background-color: #86bd90;
-    color: black;
     margin: 20px 0 20px auto;
+    background-color: #86bd90;
 }
-.chat_dialogue___answer{
-    background-color: #484a48;
+.chat_dialogue__answer{
     margin: 20px auto 20px 0;
+    background-color: #484a48;
+    opacity: 0;
+    transform: translateY(-4px); 
+    transition: opacity 1s, transform 1s;
 
     @include media-sp{
         width: 85%;
     }
 }
+.chat_dialogueText{
+    width: 100%;
+    padding: 20px;
+    font-size: 1.25rem;
+}
+.chat_dialogueText__user{
+    color: black;
+}
+.chat_answerInfo{
+    padding: 0px 20px 10px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+}
+.chat_answerCategory{
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #cfd1d0;
+    margin-right: 20px;
+}
+.chat_answerCateText{
+    color: black;
+    font-size: 0.8rem;
+
+    @include media-sp{
+        font-size: 1.1rem;
+    }
+}
+.chat_answerLv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: #cfd1d0;
+}
+.chat_answerLvImg{
+    width: 1rem;
+    aspect-ratio: 1/1;
+
+    @include media-sp{
+        width: 1.3rem;
+    }
+}
+
 
 .footer_copyRight{
     padding: 10px 0;
